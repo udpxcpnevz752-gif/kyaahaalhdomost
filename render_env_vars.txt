@@ -1,0 +1,17 @@
+# --- Render Environment Variables ---
+# Copy and paste these into your Render Dashboard under the 'Environment' tab.
+
+BOT_TOKEN=8203606211:AAEP0-y8RGdlG69ZI82K_wjDf_FTaK14V6s
+ADMIN_ID=7529580444
+ADMIN_BOT_TOKEN=8725003968:AAHnPLZWjoCsIPt4hKYEmzQmLkkRBogVBnQ
+BINANCE_ID=1129378736
+USDT_BEP20_ADDRESS=0xfaa43c4c6e783b740470306fd18e4db3ab7824ad
+UPI_ID=begumop@fam
+MY_WALLET=0xfaa43c4c6e783b740470306fd18e4db3ab7824ad
+DB_NAME=nexus_bot.db
+
+# IMPORTANT: You must also add your PostgreSQL connection string here:
+DATABASE_URL=your_postgresql_url_here
+
+# Optional: Render uses a default PORT of 10000, but you can specify it if needed:
+PORT=10000
