@@ -1,12 +1,7 @@
 from flask import Flask
 import threading
 import os
-import logging
 from dotenv import load_dotenv
-
-# Configure logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("NexusApp")
 
 load_dotenv()
 
@@ -16,27 +11,16 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return "Nexus Selling Bot is Online! 🚀"
-
-@app.route('/health')
-def health():
-    return {"status": "ok"}, 200
+    return "Nexus Selling Bot is Online!"
 
 def start_flask():
     port = int(os.environ.get("PORT", 10000))
-    logger.info(f"Starting Flask keep-alive server on port {port}...")
-    # use_reloader=False is CRITICAL when running in a thread
-    app.run(host="0.0.0.0", port=port, use_reloader=False)
+    app.run(host="0.0.0.0", port=port)
 
 if __name__ == "__main__":
-    # 1. Start Flask in a background daemon thread
-    # This satisfies Render's port binding requirement
+    # Flask runs in a background daemon thread (no asyncio needed)
     flask_thread = threading.Thread(target=start_flask, daemon=True)
     flask_thread.start()
 
-    # 2. Run the Bot on the MAIN thread
-    # This is required for asyncio and signal handling in python-telegram-bot v20+
-    try:
-        run_bot()
-    except Exception as e:
-        logger.error(f"Critical Bot Error: {e}")
+    # Bot runs on the MAIN thread — required for asyncio event loop on Python 3.10+
+    run_bot()
