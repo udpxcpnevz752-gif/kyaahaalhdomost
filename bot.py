@@ -10,6 +10,9 @@ import qrcode
 import asyncio
 import sys
 from datetime import datetime
+from dotenv import load_dotenv
+
+load_dotenv() # Load variables from .env
 
 if sys.platform == 'win32':
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
@@ -489,6 +492,15 @@ async def handle_redeem_finish(update: Update, context: ContextTypes.DEFAULT_TYP
 def run_bot():
     print("Nexus Max Premium Bot is starting...")
     init_db()
+    
+    # Explicitly create and set the event loop for the main thread
+    # This fixes the "no current event loop" error on Render (Linux/Python 3.10+)
+    try:
+        loop = asyncio.get_event_loop()
+    except RuntimeError:
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+
     app = ApplicationBuilder().token(TOKEN).job_queue(None).build()
     
     buy_conv = ConversationHandler(
